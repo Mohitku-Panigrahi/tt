@@ -1,1 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Back on Track — Countdown to June 10</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
+  body {
+    min-height: 100vh;
+    background: #0f0f12;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    color: #fff;
+    overflow-x: hidden;
+  }
+
+  .top-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #7c7c99;
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-size: clamp(1.5rem, 4vw, 2.4rem);
+    font-weight: 600;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 0.3rem;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: #7c7c99;
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .progress-ring-wrap {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    margin: 0 auto 2.5rem;
+  }
+
+  .progress-ring-wrap svg {
+    transform: rotate(-90deg);
+  }
+
+  .ring-bg { fill: none; stroke: #1e1e2e; stroke-width: 10; }
+  .ring-fill { fill: none; stroke: #7c6ef5; stroke-width: 10; stroke-linecap: round; transition: stroke-dashoffset 1s ease; }
+
+  .ring-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  .days-big {
+    font-size: 3.2rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+  }
+
+  .days-label {
+    font-size: 12px;
+    color: #7c7c99;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .units-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .unit-box {
+    background: #1a1a27;
+    border: 0.5px solid #2e2e48;
+    border-radius: 12px;
+    padding: 14px 18px;
+    text-align: center;
+    min-width: 72px;
+  }
+
+  .unit-num {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #fff;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .unit-lbl {
+    font-size: 10px;
+    color: #7c7c99;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-top: 2px;
+  }
+
+  .target-date {
+    font-size: 13px;
+    color: #7c6ef5;
+    margin-bottom: 2.5rem;
+    text-align: center;
+  }
+
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    width: 100%;
+    max-width: 520px;
+    margin-bottom: 2rem;
+  }
+
+  .pillar {
+    background: #1a1a27;
+    border: 0.5px solid #2e2e48;
+    border-radius: 10px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .pillar-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  .p1 { background: #1e1b3a; }
+  .p2 { background: #1b2d1e; }
+  .p3 { background: #2a1e1b; }
+  .p4 { background: #1b2130; }
+
+  .pillar-text { font-size: 12px; color: #bbbbd6; line-height: 1.4; }
+  .pillar-text strong { color: #fff; font-weight: 500; display: block; font-size: 13px; }
+
+  .quote-block {
+    max-width: 420px;
+    text-align: center;
+    border-top: 0.5px solid #2e2e48;
+    padding-top: 1.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .quote-text {
+    font-size: 14px;
+    color: #9999bb;
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  .today-badge {
+    display: inline-block;
+    background: #7c6ef5;
+    color: #fff;
+    font-size: 11px;
+    border-radius: 20px;
+    padding: 3px 12px;
+    margin-top: 1rem;
+    letter-spacing: 0.05em;
+  }
+</style>
+</head>
+<body>
+
+<p class="top-label">your comeback journey</p>
+<h1>Back on Track</h1>
+<p class="subtitle">Every day counts. Every small step matters.</p>
+
+<div class="progress-ring-wrap">
+  <svg width="220" height="220" viewBox="0 0 220 220">
+    <circle class="ring-bg" cx="110" cy="110" r="98"/>
+    <circle class="ring-fill" id="ringFill" cx="110" cy="110" r="98"
+      stroke-dasharray="615.75" stroke-dashoffset="615.75"/>
+  </svg>
+  <div class="ring-center">
+    <div class="days-big" id="daysLeft">—</div>
+    <div class="days-label">days left</div>
+  </div>
+</div>
+
+<div class="units-row">
+  <div class="unit-box">
+    <div class="unit-num" id="uhours">--</div>
+    <div class="unit-lbl">hours</div>
+  </div>
+  <div class="unit-box">
+    <div class="unit-num" id="umins">--</div>
+    <div class="unit-lbl">mins</div>
+  </div>
+  <div class="unit-box">
+    <div class="unit-num" id="usecs">--</div>
+    <div class="unit-lbl">secs</div>
+  </div>
+</div>
+
+<p class="target-date">Target: June 10, 2026</p>
+
+<div class="pillars">
+  <div class="pillar">
+    <div class="pillar-icon p1">🌅</div>
+    <div class="pillar-text"><strong>Fixed routine</strong>Wake up, move, focus</div>
+  </div>
+  <div class="pillar">
+    <div class="pillar-icon p2">🎯</div>
+    <div class="pillar-text"><strong>One main goal</strong>Work on it daily</div>
+  </div>
+  <div class="pillar">
+    <div class="pillar-icon p3">📵</div>
+    <div class="pillar-text"><strong>No distractions</strong>Phone away, stay present</div>
+  </div>
+  <div class="pillar">
+    <div class="pillar-icon p4">🏃</div>
+    <div class="pillar-text"><strong>Move daily</strong>15–20 min minimum</div>
+  </div>
+</div>
+
+<div class="quote-block">
+  <p class="quote-text">"Do something every day that your future self will thank you for."</p>
+  <span class="today-badge" id="todayBadge">Today: —</span>
+</div>
+
+<script>
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  const TARGET = new Date('2026-06-10T00:00:00');
+  const START  = new Date('2026-03-24T00:00:00');
+  const TOTAL_DAYS = Math.round((TARGET - START) / 86400000);
+  const circumference = 2 * Math.PI * 98;
+  const ring = document.getElementById('ringFill');
+
+  function update() {
+    const now = new Date();
+    const diff = TARGET - now;
+
+    if (diff <= 0) {
+      document.getElementById('daysLeft').textContent = '0';
+      document.getElementById('uhours').textContent = '00';
+      document.getElementById('umins').textContent = '00';
+      document.getElementById('usecs').textContent = '00';
+      ring.style.strokeDashoffset = 0;
+      return;
+    }
+
+    const totalSecs = Math.floor(diff / 1000);
+    const days  = Math.floor(totalSecs / 86400);
+    const hours = Math.floor((totalSecs % 86400) / 3600);
+    const mins  = Math.floor((totalSecs % 3600) / 60);
+    const secs  = totalSecs % 60;
+
+    document.getElementById('daysLeft').textContent = days;
+    document.getElementById('uhours').textContent = pad(hours);
+    document.getElementById('umins').textContent   = pad(mins);
+    document.getElementById('usecs').textContent   = pad(secs);
+
+    const elapsed = TOTAL_DAYS - days;
+    const pct = Math.min(elapsed / TOTAL_DAYS, 1);
+    ring.style.strokeDasharray  = circumference;
+    ring.style.strokeDashoffset = circumference * (1 - pct);
+
+    const opts = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById('todayBadge').textContent =
+      'Today: ' + now.toLocaleDateString('en-IN', opts);
+  }
+
+  update();
+  setInterval(update, 1000);
+</script>
+</body>
+</html>
